@@ -3,6 +3,9 @@ import styles from '../../styles/Home.module.css';
 import Camera from './Camera';
 import QrScanner from './QrScanner';
 import LockStatus from './LockStatus';
+import OwnerPanel from '../components/OwnerPanel/OwnerPanel';
+import SmartBox from '../components/SmartBox/SmartBox';
+import SystemMonitor from '../components/SystemMonitor/SystemMonitor';
 import { Delivery, FailedDelivery, TelegramSettings } from '../../types/types';
 
 interface SmartBoxProps {
