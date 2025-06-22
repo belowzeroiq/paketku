@@ -2,7 +2,7 @@ import { useState } from 'react';
 import DeliveryHistory from './DeliveryHistory';
 import TelegramSettings from './TelegramSettings';
 import styles from '@styles/Home.module.css';
-import { Delivery, FailedDelivery, TelegramSettings } from '@types/types';
+import { Delivery, FailedDelivery, TelegramSettings } from '@/app-types/types';
 import TrackingList from './TrackingList';
 
 interface OwnerPanelProps {

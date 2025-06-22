@@ -1,5 +1,5 @@
 import styles from '@styles/Home.module.css';
-import { Delivery, FailedDelivery } from '@types/types';
+import { Delivery, FailedDelivery } from '@/app-types/types';
 
 interface DeliveryHistoryProps {
   deliveries: Delivery[] | FailedDelivery[];

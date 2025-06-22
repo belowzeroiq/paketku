@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Delivery, FailedDelivery, TelegramSettings } from '../types/types';
+import { Delivery, FailedDelivery, TelegramSettings } from '../app-types/types';
 
 export const useSmartBox = () => {
   const [isBoxLocked, setIsBoxLocked] = useState(true);
