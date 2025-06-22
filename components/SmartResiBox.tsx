@@ -524,14 +524,14 @@ const SmartResiBox = () => {
 
                 {/* Scan Controls */}
                 <div className={styles.scanSection}>
-                  <label className={styles.label}>Scan Package</label>
+                  <label className={styles.label}>{t("scanPackage")}</label>
                   <div className={styles.inputGroup}>
                     <input
                       type="text"
                       value={scanInput}
                       onChange={(e) => setScanInput(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && simulateScan()}
-                      placeholder="Enter tracking number to scan..."
+                      placeholder={t("enterTrackingNumber")}
                       disabled={isScanning}
                       className={`${styles.input} ${isScanning ? styles.disabled : ""}`}
                     />
@@ -545,12 +545,12 @@ const SmartResiBox = () => {
                           <Eye
                             className={`${styles.buttonIcon} ${styles.scanning}`}
                           />
-                          Scanning...
+                          {t("scanning")}
                         </>
                       ) : (
                         <>
                           <Scan className={styles.buttonIcon} />
-                          Scan
+                          {t("scan")}
                         </>
                       )}
                     </button>
