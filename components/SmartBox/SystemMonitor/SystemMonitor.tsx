@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styles from '@styles/Home.module.css';
-import Camera from './Camera';
-import QrScanner from './QrScanner';
-import LockStatus from './LockStatus';
-import OwnerPanel from './OwnerPanel/OwnerPanel';
-import SystemMonitor from './SystemMonitor/SystemMonitor';  // Fixed import
+import Camera from '../Camera';
+import QrScanner from '../QrScanner';
+import LockStatus from '../LockStatus';
+import OwnerPanel from '../OwnerPanel/OwnerPanel';
+import SystemMonitor from '../SystemMonitor/SystemMonitor';  // Fixed import
 import { Delivery, FailedDelivery, TelegramSettingsType } from '@/app-types/types';
 
 interface SystemMonitorProps {

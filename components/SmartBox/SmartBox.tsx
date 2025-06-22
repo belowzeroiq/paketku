@@ -5,7 +5,7 @@ import OwnerPanel from './OwnerPanel/OwnerPanel';
 //import SmartBox from 'components/SmartBox/SmartBox';
 import SystemMonitor from './SystemMonitor/SystemMonitor';
 import styles from '@styles/Home.module.css';
-import { Delivery, FailedDelivery, TelegramSettings } from '@/app-types/types';
+import { Delivery, FailedDelivery, TelegramSettingsType } from '@/app-types/types';
 import Camera from './Camera';
 
 interface SmartBoxProps {
@@ -18,7 +18,7 @@ interface SmartBoxProps {
   setRejectedCount: React.Dispatch<React.SetStateAction<number>>;
   setIsBoxLocked: React.Dispatch<React.SetStateAction<boolean>>;
   setIsScanning: React.Dispatch<React.SetStateAction<boolean>>;
-  telegramSettings: TelegramSettings;
+  telegramSettings: TelegramSettingsType;
   log: (message: string) => void;
   showNotification: (message: string, type?: 'info' | 'success' | 'warning') => void;
 }
