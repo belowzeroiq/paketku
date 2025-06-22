@@ -294,8 +294,8 @@ const SmartResiBox = () => {
     setNotification("");
     setScanInput("");
     setNewTracking("");
-    addLog("🔄 System reset complete");
-    showNotification("System reset complete!", "info");
+    addLog("�� System reset complete");
+    showNotification(t("systemResetComplete"), "info");
   };
 
   const saveTelegramSettings = () => {
