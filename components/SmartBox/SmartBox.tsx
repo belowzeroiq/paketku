@@ -1,12 +1,9 @@
 import { useState } from 'react';
-import QrScanner from './QrScanner';
-import LockStatus from './LockStatus';
-import OwnerPanel from './OwnerPanel/OwnerPanel';
-//import SmartBox from 'components/SmartBox/SmartBox';
-import SystemMonitor from './SystemMonitor/SystemMonitor';
 import styles from '@styles/Home.module.css';
 import { Delivery, FailedDelivery, TelegramSettingsType } from '@/app-types/types';
 import Camera from './Camera';
+import QrScanner from './QrScanner';
+import LockStatus from './LockStatus';
 
 interface SmartBoxProps {
   expectedPackages: string[];
@@ -39,6 +36,37 @@ const SmartBox: React.FC<SmartBoxProps> = ({
 }) => {
   const [scanInput, setScanInput] = useState('');
 
+  const handleDelivery = (trackingNumber: string) => {
+    setExpectedPackages(prev => prev.filter(t => t !== trackingNumber));
+    setDeliveredPackages(prev => [
+      ...prev,
+      {
+        tracking: trackingNumber,
+        timestamp: new Date().toLocaleString()
+      }
+    ]);
+    setIsBoxLocked(false);
+    showNotification(`📦 Package delivered! Tracking: ${trackingNumber}`, 'success');
+    
+    setTimeout(() => {
+      setIsBoxLocked(true);
+      log('🔒 Box automatically locked');
+    }, 10000);
+  };
+
+  const handleFailedDelivery = (trackingNumber: string) => {
+    setRejectedCount(prev => prev + 1);
+    setFailedDeliveries(prev => [
+      ...prev,
+      {
+        tracking: trackingNumber,
+        reason: 'Tracking number not found',
+        timestamp: new Date().toLocaleString()
+      }
+    ]);
+    showNotification(`🚨 Unauthorized delivery attempt: ${trackingNumber}`, 'warning');
+  };
+
   const handleScan = () => {
     if (!scanInput.trim()) {
       log('❌ No barcode/QR code provided');
@@ -46,64 +74,11 @@ const SmartBox: React.FC<SmartBoxProps> = ({
     }
 
     setIsScanning(true);
-    log(`📷 Camera detected barcode: ${scanInput}`);
-    log('🔍 Processing QR/Barcode...');
+    log(`📷 Scanning: ${scanInput}`);
 
     setTimeout(() => {
-      const trackingIndex = expectedPackages.indexOf(scanInput);
-      
-      if (trackingIndex !== -1) {
-        log(`✅ Valid tracking number found: ${scanInput}`);
-        log('🔓 Unlocking box...');
-        
-        // Remove from expected packages
-        setExpectedPackages(prev => prev.filter((_, i) => i !== trackingIndex));
-        
-        // Add to delivered packages
-        setDeliveredPackages(prev => [
-          ...prev,
-          {
-            tracking: scanInput,
-            timestamp: new Date().toLocaleString()
-          }
-        ]);
-        
-        // Unlock the box
-        setIsBoxLocked(false);
-        
-        showNotification(`📦 Package delivered! Tracking: ${scanInput}`, 'success');
-        
-        if (telegramSettings.enabled) {
-          log(`📱 Sending Telegram notification about successful delivery`);
-        }
-        
-        // Auto-lock after 10 seconds
-        setTimeout(() => {
-          setIsBoxLocked(true);
-          log('🔒 Box automatically locked');
-        }, 10000);
-      } else {
-        log(`❌ Invalid tracking number: ${scanInput}`);
-        log('🔒 Access denied - box remains locked');
-        
-        setRejectedCount(prev => prev + 1);
-        
-        setFailedDeliveries(prev => [
-          ...prev,
-          {
-            tracking: scanInput,
-            reason: 'Tracking number not found in database',
-            timestamp: new Date().toLocaleString()
-          }
-        ]);
-        
-        showNotification(`🚨 Unauthorized delivery attempt with tracking: ${scanInput}`, 'warning');
-        
-        if (telegramSettings.enabled) {
-          log(`📱 Sending Telegram alert about unauthorized attempt`);
-        }
-      }
-      
+      const isValid = expectedPackages.includes(scanInput);
+      isValid ? handleDelivery(scanInput) : handleFailedDelivery(scanInput);
       setIsScanning(false);
       setScanInput('');
     }, 2000);
@@ -111,27 +86,31 @@ const SmartBox: React.FC<SmartBoxProps> = ({
 
   return (
     <div className={styles.panel}>
-      <h2>📦 Smart Resi Box</h2>
+      <h2>📦 Smart Delivery Box</h2>
       <div className={styles.smartBox}>
         <Camera isScanning={isScanning} />
-        <QrScanner isScanning={isScanning} scannedCode={scanInput} />
+        <QrScanner isScanning={isScanning} code={scanInput} />
         
-        <div className={styles.scanInput}>
+        <div className={styles.scanControl}>
           <input
             type="text"
             value={scanInput}
             onChange={(e) => setScanInput(e.target.value)}
-            placeholder="Simulate QR/Barcode scan..."
+            placeholder="Enter tracking number..."
             onKeyPress={(e) => e.key === 'Enter' && handleScan()}
           />
-          <button className={styles.btn} onClick={handleScan}>
-            🔍 Scan
+          <button 
+            className={`${styles.btn} ${isScanning ? styles.disabled : ''}`}
+            onClick={handleScan}
+            disabled={isScanning}
+          >
+            {isScanning ? 'Scanning...' : '🔍 Scan'}
           </button>
         </div>
         
         <LockStatus isLocked={isBoxLocked} />
-        <div style={{ fontSize: '12px', marginTop: '5px' }}>
-          Box Status: {isBoxLocked ? 'LOCKED' : 'UNLOCKED'}
+        <div className={styles.boxStatus}>
+          Status: {isBoxLocked ? 'LOCKED' : 'UNLOCKED'}
         </div>
       </div>
     </div>
