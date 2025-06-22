@@ -271,13 +271,13 @@ const SmartResiBox = () => {
         ...prev,
         {
           tracking: scanInput.trim(),
-          reason: "Invalid tracking number",
+          reason: t("invalidTrackingNumber"),
           timestamp: new Date().toLocaleString(),
         },
       ]);
 
       addLog(`❌ Access denied: ${scanInput}`);
-      showNotification("Unauthorized delivery attempt!", "error");
+      showNotification(t("unauthorizedDelivery"), "error");
     }
 
     setIsScanning(false);
