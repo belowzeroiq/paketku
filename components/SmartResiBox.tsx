@@ -676,7 +676,17 @@ const SmartResiBox = () => {
                 <div className={styles.panelIcon}>
                   <Settings className={styles.icon} />
                 </div>
-                <h2>Telegram Bot Settings</h2>
+                <div className={styles.panelTitleSection}>
+                  <h2>Telegram Bot Settings</h2>
+                  <button
+                    onClick={handleLogout}
+                    className={`${styles.button} ${styles.logoutButton}`}
+                    title="Logout from settings"
+                  >
+                    <Lock className={styles.buttonIcon} />
+                    Logout
+                  </button>
+                </div>
               </div>
 
               <div className={styles.settingsForm}>
