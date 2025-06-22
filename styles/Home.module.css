@@ -3,26 +3,37 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
-  height: calc(100vh - 40px);
+  gap: 24px;
+  min-height: calc(100vh - 40px);
+  align-items: start;
+  padding: 0 10px;
 }
 
 .panel {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  padding: 20px;
+  padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: rgb(33, 33, 33);
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 16px;
+  height: fit-content;
+  min-height: 500px;
 }
 
 .panel h2 {
   color: #121212;
-  margin-bottom: 15px;
+  margin: 0 0 20px 0;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .trackingInput {
@@ -30,10 +41,17 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   color: white;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
   font-size: 14px;
   width: 100%;
+  transition: all 0.3s ease;
+}
+
+.trackingInput:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .trackingInput::placeholder {
@@ -44,13 +62,15 @@
   background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
   border: none;
   color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   transition: all 0.3s ease;
-  margin: 5px 0;
-  font-size: 12px;
+  margin: 4px 0;
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
 }
 
 .btn:hover {
@@ -70,11 +90,12 @@
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
-  padding: 10px;
-  height: 200px;
+  padding: 12px;
+  height: 180px;
   overflow-y: auto;
-  font-size: 12px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
 }
 
 .trackingItem {
@@ -94,11 +115,16 @@
 .smartBox {
   background: #2d3748;
   border-radius: 15px;
-  padding: 20px;
-  margin: 10px 0;
+  padding: 24px;
+  margin: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   position: relative;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex-grow: 1;
 }
 
 .camera {
@@ -112,7 +138,7 @@
 }
 
 .camera::after {
-  content: '📷';
+  content: "📷";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -171,12 +197,13 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   color: #00ff00;
-  padding: 10px;
-  height: 200px;
+  padding: 12px;
+  height: 180px;
   overflow-y: auto;
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  margin-top: 10px;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .notification {
@@ -197,6 +224,34 @@
 .notificationWarning {
   background: rgba(255, 152, 0, 0.2);
   border-color: rgba(255, 152, 0, 0.5);
+}
+
+.scanControl {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+}
+
+.scanControl input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  padding: 12px 16px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.scanControl input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.scanControl input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .scanInput {
@@ -223,11 +278,12 @@
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
-  padding: 10px;
-  height: 150px;
+  padding: 12px;
+  height: 140px;
   overflow-y: auto;
-  font-size: 11px;
-  margin-top: 10px;
+  font-size: 12px;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .historyItem {
@@ -241,4 +297,78 @@
 .historyItemFailed {
   background: rgba(244, 67, 54, 0.2);
   border-left: 3px solid #f44336;
+}
+
+.boxStatus {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .panelContainer {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 600px;
+  }
+
+  .panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .panelContainer {
+    padding: 0 5px;
+    gap: 16px;
+  }
+
+  .panel {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .panel h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .trackingList,
+  .statusLog,
+  .deliveryHistory {
+    height: 120px;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .panelContainer {
+    grid-template-columns: 1fr 1fr;
+    max-width: 900px;
+  }
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.panel h3 {
+  color: #121212;
+  margin: 16px 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
 }
