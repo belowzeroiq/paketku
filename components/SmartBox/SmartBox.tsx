@@ -1,9 +1,13 @@
-import { useState } from 'react';
-import styles from '@styles/Home.module.css';
-import { Delivery, FailedDelivery, TelegramSettingsType } from '@/app-types/types';
-import Camera from './Camera';
-import QrScanner from './QrScanner';
-import LockStatus from './LockStatus';
+import { useState } from "react";
+import styles from "@styles/Home.module.css";
+import {
+  Delivery,
+  FailedDelivery,
+  TelegramSettingsType,
+} from "@/app-types/types";
+import Camera from "./Camera";
+import QrScanner from "./QrScanner";
+import LockStatus from "./LockStatus";
 
 interface SmartBoxProps {
   expectedPackages: string[];
@@ -17,7 +21,10 @@ interface SmartBoxProps {
   setIsScanning: React.Dispatch<React.SetStateAction<boolean>>;
   telegramSettings: TelegramSettingsType;
   log: (message: string) => void;
-  showNotification: (message: string, type?: 'info' | 'success' | 'warning') => void;
+  showNotification: (
+    message: string,
+    type?: "info" | "success" | "warning",
+  ) => void;
 }
 
 const SmartBox: React.FC<SmartBoxProps> = ({
@@ -34,42 +41,48 @@ const SmartBox: React.FC<SmartBoxProps> = ({
   log,
   showNotification,
 }) => {
-  const [scanInput, setScanInput] = useState('');
+  const [scanInput, setScanInput] = useState("");
 
   const handleDelivery = (trackingNumber: string) => {
-    setExpectedPackages(prev => prev.filter(t => t !== trackingNumber));
-    setDeliveredPackages(prev => [
+    setExpectedPackages((prev) => prev.filter((t) => t !== trackingNumber));
+    setDeliveredPackages((prev) => [
       ...prev,
       {
         tracking: trackingNumber,
-        timestamp: new Date().toLocaleString()
-      }
+        timestamp: new Date().toLocaleString(),
+      },
     ]);
     setIsBoxLocked(false);
-    showNotification(`📦 Package delivered! Tracking: ${trackingNumber}`, 'success');
-    
+    showNotification(
+      `📦 Package delivered! Tracking: ${trackingNumber}`,
+      "success",
+    );
+
     setTimeout(() => {
       setIsBoxLocked(true);
-      log('🔒 Box automatically locked');
+      log("🔒 Box automatically locked");
     }, 10000);
   };
 
   const handleFailedDelivery = (trackingNumber: string) => {
-    setRejectedCount(prev => prev + 1);
-    setFailedDeliveries(prev => [
+    setRejectedCount((prev) => prev + 1);
+    setFailedDeliveries((prev) => [
       ...prev,
       {
         tracking: trackingNumber,
-        reason: 'Tracking number not found',
-        timestamp: new Date().toLocaleString()
-      }
+        reason: "Tracking number not found",
+        timestamp: new Date().toLocaleString(),
+      },
     ]);
-    showNotification(`🚨 Unauthorized delivery attempt: ${trackingNumber}`, 'warning');
+    showNotification(
+      `🚨 Unauthorized delivery attempt: ${trackingNumber}`,
+      "warning",
+    );
   };
 
   const handleScan = () => {
     if (!scanInput.trim()) {
-      log('❌ No barcode/QR code provided');
+      log("❌ No barcode/QR code provided");
       return;
     }
 
@@ -80,7 +93,7 @@ const SmartBox: React.FC<SmartBoxProps> = ({
       const isValid = expectedPackages.includes(scanInput);
       isValid ? handleDelivery(scanInput) : handleFailedDelivery(scanInput);
       setIsScanning(false);
-      setScanInput('');
+      setScanInput("");
     }, 2000);
   };
 
@@ -90,27 +103,27 @@ const SmartBox: React.FC<SmartBoxProps> = ({
       <div className={styles.smartBox}>
         <Camera isScanning={isScanning} />
         <QrScanner isScanning={isScanning} code={scanInput} />
-        
+
         <div className={styles.scanControl}>
           <input
             type="text"
             value={scanInput}
             onChange={(e) => setScanInput(e.target.value)}
             placeholder="Enter tracking number..."
-            onKeyPress={(e) => e.key === 'Enter' && handleScan()}
+            onKeyPress={(e) => e.key === "Enter" && handleScan()}
           />
-          <button 
-            className={`${styles.btn} ${isScanning ? styles.disabled : ''}`}
+          <button
+            className={`${styles.btn} ${isScanning ? styles.disabled : ""}`}
             onClick={handleScan}
             disabled={isScanning}
           >
-            {isScanning ? 'Scanning...' : '🔍 Scan'}
+            {isScanning ? "Scanning..." : "🔍 Scan"}
           </button>
         </div>
-        
+
         <LockStatus isLocked={isBoxLocked} />
         <div className={styles.boxStatus}>
-          Status: {isBoxLocked ? 'LOCKED' : 'UNLOCKED'}
+          Status: {isBoxLocked ? "LOCKED" : "UNLOCKED"}
         </div>
       </div>
     </div>
