@@ -102,7 +102,6 @@ const SmartBox: React.FC<SmartBoxProps> = ({
       <h2>📦 Smart Delivery Box</h2>
       <div className={styles.smartBox}>
         <Camera isScanning={isScanning} />
-        <QrScanner isScanning={isScanning} code={scanInput} />
 
         <div className={styles.scanControl}>
           <input
