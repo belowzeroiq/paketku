@@ -8,7 +8,7 @@ import { Delivery, FailedDelivery, TelegramSettingsType } from '@/app-types/type
 
 interface SystemMonitorProps {
   expectedPackages: string[];
-  deliveredPackages: number;
+  deliveredPackages: Delivery[];
   rejectedCount: number;
   logs: string[];
   telegramSettings: { enabled: boolean };
