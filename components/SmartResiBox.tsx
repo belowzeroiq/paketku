@@ -532,8 +532,64 @@ const SmartResiBox = () => {
           </div>
         )}
 
+        {/* Password Modal */}
+        {showPasswordModal && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modal}>
+              <div className={styles.modalHeader}>
+                <div className={styles.modalIcon}>
+                  <Lock className={styles.icon} />
+                </div>
+                <h3>Admin Authentication Required</h3>
+                <p>Enter the admin password to access settings</p>
+              </div>
+
+              <div className={styles.modalContent}>
+                {passwordError && (
+                  <div className={styles.errorMessage}>
+                    <XCircle className={styles.errorIcon} />
+                    {passwordError}
+                  </div>
+                )}
+
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Password</label>
+                  <input
+                    type="password"
+                    value={passwordInput}
+                    onChange={(e) => setPasswordInput(e.target.value)}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" && handlePasswordSubmit()
+                    }
+                    placeholder="Enter admin password..."
+                    className={styles.input}
+                    autoFocus
+                  />
+                </div>
+
+                <div className={styles.modalActions}>
+                  <button
+                    onClick={handlePasswordCancel}
+                    className={`${styles.button} ${styles.cancelButton}`}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handlePasswordSubmit}
+                    disabled={!passwordInput.trim()}
+                    className={`${styles.button} ${styles.confirmButton} ${!passwordInput.trim() ? styles.disabled : ""}`}
+                  >
+                    <Shield className={styles.buttonIcon} />
+                    Authenticate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Settings Tab */}
-        {activeTab === "settings" && (
+        {activeTab === "settings" && isAuthenticated && (
           <div className={styles.settingsGrid}>
             {/* Owner Panel */}
             <div className={styles.panel}>
