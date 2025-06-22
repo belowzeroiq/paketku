@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import QrScanner from './QrScanner';
 import LockStatus from './LockStatus';
-import OwnerPanel from '../components/OwnerPanel/OwnerPanel';
+import OwnerPanel from './OwnerPanel/OwnerPanel';
 import SmartBox from '../components/SmartBox/SmartBox';
 import SystemMonitor from '../components/SystemMonitor/SystemMonitor';
 import styles from '@styles/Home.module.css';
