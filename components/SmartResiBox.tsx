@@ -50,6 +50,15 @@ const SmartResiBox = () => {
     "overview" | "history" | "settings"
   >("overview");
 
+  // Password protection for settings
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Default admin password (in production, this should be environment variable)
+  const ADMIN_PASSWORD = "admin123";
+
   const addLog = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
     setLogs((prev) => [...prev, `[${timestamp}] ${message}`]);
