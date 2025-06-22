@@ -16,10 +16,10 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
       "@components/*": ["components/*"],
-      "@types/*": ["app-types/*"],
-      "@styles/*": ["styles/*"]
+      "@app-types/*": ["app-types/*"],
+      "@styles/*": ["styles/*"],
+      "@/*": ["./*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
