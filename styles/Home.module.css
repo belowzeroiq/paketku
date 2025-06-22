@@ -364,3 +364,11 @@
   justify-content: center;
   padding: 20px 0;
 }
+
+.panel h3 {
+  color: #121212;
+  margin: 16px 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
