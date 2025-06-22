@@ -276,7 +276,7 @@ const SmartResiBox = () => {
         },
       ]);
 
-      addLog(`❌ Access denied: ${scanInput}`);
+      addLog(`��� Access denied: ${scanInput}`);
       showNotification(t("unauthorizedDelivery"), "error");
     }
 
@@ -294,17 +294,17 @@ const SmartResiBox = () => {
     setNotification("");
     setScanInput("");
     setNewTracking("");
-    addLog("�� System reset complete");
+    addLog("🔄 System reset complete");
     showNotification(t("systemResetComplete"), "info");
   };
 
   const saveTelegramSettings = () => {
     if (!telegramSettings.botToken.trim() || !telegramSettings.chatId.trim()) {
-      showNotification("Please fill in all Telegram settings", "warning");
+      showNotification(t("fillAllTelegramSettings"), "warning");
       return;
     }
     addLog("📱 Telegram settings saved");
-    showNotification("Telegram bot configured!", "success");
+    showNotification(t("telegramConfigured"), "success");
   };
 
   const handleTabClick = (tabId: "overview" | "history" | "settings") => {
