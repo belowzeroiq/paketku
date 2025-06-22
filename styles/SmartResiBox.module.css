@@ -302,17 +302,12 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-@media (min-width: 1280px) {
-  .overviewGrid {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-  }
-}
-
-.ownerPanel .panelIcon {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+.statsSection {
+  margin-bottom: 1rem;
 }
 
 .smartBoxPanel .panelIcon {
@@ -321,6 +316,25 @@
 
 .monitorPanel .panelIcon {
   background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+}
+
+.ownerPanel .panelIcon {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+/* Settings Grid */
+.settingsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .settingsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Forms and Inputs */
