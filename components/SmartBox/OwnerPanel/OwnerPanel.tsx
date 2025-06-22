@@ -9,10 +9,10 @@ interface OwnerPanelProps {
   expectedPackages: string[];
   deliveredPackages: Delivery[];
   failedDeliveries: FailedDelivery[];
-  telegramSettings: TelegramSettingsType;
+  telegramSettings: TelegramSettings;
   notification: { message: string; type: 'info' | 'success' | 'warning'; visible: boolean };
   setExpectedPackages: React.Dispatch<React.SetStateAction<string[]>>;
-  setTelegramSettings: React.Dispatch<React.SetStateAction<TelegramSettingsType>>;
+  setTelegramSettings: React.Dispatch<React.SetStateAction<TelegramSettings>>;
   log: (message: string) => void;
   showNotification: (message: string, type?: 'info' | 'success' | 'warning') => void;
 }
