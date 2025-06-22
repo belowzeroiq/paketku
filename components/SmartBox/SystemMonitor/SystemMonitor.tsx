@@ -51,7 +51,18 @@ const SystemMonitor: React.FC<SystemMonitorProps> = ({
       <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: '15px', borderRadius: '8px', marginBottom: '15px' }}>
         <div style={{ fontSize: '14px', marginBottom: '10px' }}><strong>Statistics:</strong></div>
         <div style={{ fontSize: '12px' }}>Expected: <span>{expectedPackages.length}</span></div>
-        <div style={{ fontSize: '12px' }}>Delivered: <span>{deliveredPackages}</span></div>
+        <div style={{ fontSize: '12px' }}>
+          Delivered: <span>{deliveredPackages.length}</span>
+          {deliveredPackages.length > 0 && (
+            <div style={{ marginLeft: '10px', fontSize: '10px' }}>
+              {deliveredPackages.map(pkg => (
+                <div key={pkg.tracking}>
+                  • {pkg.tracking} ({new Date(pkg.timestamp).toLocaleTimeString()})
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <div style={{ fontSize: '12px' }}>Rejected: <span>{rejectedCount}</span></div>
       </div>
 
