@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import OwnerPanel from '../components/OwnerPanel/OwnerPanel';
+import OwnerPanel from '../components/SmartBox/OwnerPanel/OwnerPanel';
 import SmartBox from '../components/SmartBox/SmartBox';
-import SystemMonitor from '../components/SystemMonitor/SystemMonitor';
-import { Delivery, FailedDelivery, TelegramSettings } from '../app-types/types';
+import SystemMonitor from '../components/SmartBox/SystemMonitor/SystemMonitor';
+import { Delivery, FailedDelivery, TelegramSettingsType } from '../app-types/types';
 
 export default function Home() {
   const [expectedPackages, setExpectedPackages] = useState<string[]>([]);
@@ -13,7 +13,7 @@ export default function Home() {
   const [rejectedCount, setRejectedCount] = useState(0);
   const [isBoxLocked, setIsBoxLocked] = useState(true);
   const [isScanning, setIsScanning] = useState(false);
-  const [telegramSettings, setTelegramSettings] = useState<TelegramSettings>({
+  const [telegramSettings, setTelegramSettings] = useState<TelegramSettingsType>({
     botToken: '',
     chatId: '',
     enabled: false,
