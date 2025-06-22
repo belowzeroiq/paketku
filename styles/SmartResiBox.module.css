@@ -879,9 +879,8 @@
 }
 
 /* Settings */
-.settingsContainer {
-  max-width: 32rem;
-  margin: 0 auto;
+.settingsGrid .panelIcon {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
 }
 
 .settingsForm {
