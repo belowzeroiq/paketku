@@ -482,7 +482,7 @@ const SmartResiBox = () => {
                   <div className={styles.panelIcon}>
                     <Package className={styles.icon} />
                   </div>
-                  <h2>Smart Box</h2>
+                  <h2>{t("smartBox")}</h2>
                 </div>
 
                 {/* Box Visual */}
@@ -507,11 +507,11 @@ const SmartResiBox = () => {
                     </div>
 
                     <div className={styles.statusText}>
-                      <p>Box Status</p>
+                      <p>{t("boxStatus")}</p>
                       <p
                         className={`${styles.statusValue} ${isLocked ? styles.lockedText : styles.unlockedText}`}
                       >
-                        {isLocked ? "SECURED" : "UNLOCKED"}
+                        {isLocked ? t("locked") : t("unlocked")}
                       </p>
                     </div>
 
