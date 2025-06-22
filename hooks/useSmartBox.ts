@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Delivery, FailedDelivery, TelegramSettings } from '../app-types/types';
+import { Delivery, FailedDelivery, TelegramSettingsType } from '../app-types/types';
 
 export const useSmartBox = () => {
   const [isBoxLocked, setIsBoxLocked] = useState(true);
@@ -12,7 +12,7 @@ export const useSmartBox = () => {
     setDeliveredPackages: React.Dispatch<React.SetStateAction<Delivery[]>>,
     setFailedDeliveries: React.Dispatch<React.SetStateAction<FailedDelivery[]>>,
     setRejectedCount: React.Dispatch<React.SetStateAction<number>>,
-    telegramSettings: TelegramSettings,
+    telegramSettings: TelegramSettingsType,
     log: (message: string) => void,
     showNotification: (message: string, type?: 'info' | 'success' | 'warning') => void
   ) => {
@@ -70,7 +70,7 @@ export const useSmartBox = () => {
     setExpectedPackages: React.Dispatch<React.SetStateAction<string[]>>,
     setDeliveredPackages: React.Dispatch<React.SetStateAction<Delivery[]>>,
     setIsBoxLocked: React.Dispatch<React.SetStateAction<boolean>>,
-    telegramSettings: TelegramSettings,
+    telegramSettings: TelegramSettingsType,
     log: (message: string) => void,
     showNotification: (message: string, type?: 'info' | 'success' | 'warning') => void
   ) => {
