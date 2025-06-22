@@ -19,7 +19,6 @@ const TelegramSettings: React.FC<TelegramSettingsProps> = ({
   const [chatId, setChatId] = useState(telegramSettings.chatId);
   const [usingEnvVars, setUsingEnvVars] = useState(false);
 
-  // Initialize with environment variables if available
   useEffect(() => {
     const envBotToken = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
     const envChatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
@@ -66,7 +65,6 @@ const TelegramSettings: React.FC<TelegramSettingsProps> = ({
     }
 
     try {
-      // Use API route for actual sending
       const response = await fetch('/api/telegram-test', {
         method: 'POST',
         headers: {
@@ -78,15 +76,19 @@ const TelegramSettings: React.FC<TelegramSettingsProps> = ({
         })
       });
 
-      if (response.ok) {
-        showNotification('📱 Test notification sent to Telegram!', 'success');
-        log('📱 Test Telegram notification sent');
-      } else {
-        throw new Error('Failed to send');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      showNotification('📱 Test notification sent to Telegram!', 'success');
+      log('📱 Test Telegram notification sent');
     } catch (error) {
+      let errorMessage = 'Unknown error occurred';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
       showNotification('❌ Failed to send test notification', 'warning');
-      log(`📱 Failed to send Telegram test: ${error.message}`);
+      log(`📱 Failed to send Telegram test: ${errorMessage}`);
     }
   };
 
