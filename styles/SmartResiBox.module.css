@@ -1137,6 +1137,29 @@
   .tab {
     justify-content: center;
   }
+
+  .modal {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .modalHeader {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .modalContent {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .panelTitleSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 }
 
 /* Scrollbar Styling */
