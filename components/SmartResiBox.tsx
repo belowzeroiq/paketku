@@ -429,9 +429,9 @@ const SmartResiBox = () => {
         <div className={styles.tabNavigation}>
           <div className={styles.tabContainer}>
             {[
-              { id: "overview", label: "Overview", icon: Monitor },
-              { id: "history", label: "History", icon: Clock },
-              { id: "settings", label: "Settings", icon: Settings },
+              { id: "overview", label: t("overview"), icon: Monitor },
+              { id: "history", label: t("history"), icon: Clock },
+              { id: "settings", label: t("settings"), icon: Settings },
             ].map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
