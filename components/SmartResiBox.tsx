@@ -368,10 +368,22 @@ const SmartResiBox = () => {
           <div className={styles.logoContainer}>
             <Package className={styles.logoIcon} />
           </div>
-          <h1 className={styles.title}>Smart Resi Box</h1>
-          <p className={styles.subtitle}>
-            Next-Generation Package Delivery System
-          </p>
+          <h1 className={styles.title}>{t("title")}</h1>
+          <p className={styles.subtitle}>{t("subtitle")}</p>
+
+          {/* Language Toggle */}
+          <div className={styles.languageToggle}>
+            <button
+              onClick={toggleLanguage}
+              className={styles.languageButton}
+              title={`Switch to ${language === "en" ? "Indonesian" : "English"}`}
+            >
+              <Globe className={styles.languageIcon} />
+              <span className={styles.languageText}>
+                {language === "en" ? "ID" : "EN"}
+              </span>
+            </button>
+          </div>
 
           {/* Status Bar */}
           <div className={styles.statusBar}>
@@ -379,15 +391,15 @@ const SmartResiBox = () => {
               <div
                 className={`${styles.statusDot} ${isLocked ? styles.locked : styles.unlocked}`}
               ></div>
-              <span>{isLocked ? "Secured" : "Unlocked"}</span>
+              <span>{isLocked ? t("secured") : t("unlocked")}</span>
             </div>
             <div className={styles.statusItem}>
               <Activity className={styles.statusIcon} />
-              <span>Online</span>
+              <span>{t("online")}</span>
             </div>
             <div className={styles.statusItem}>
               <Shield className={styles.statusIcon} />
-              <span>Protected</span>
+              <span>{t("protected")}</span>
             </div>
           </div>
         </div>
