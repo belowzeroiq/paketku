@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import styles from '../../styles/Home.module.css';
-import TrackingList from './TrackingList';
 import DeliveryHistory from './DeliveryHistory';
 import TelegramSettings from './TelegramSettings';
-import { Delivery, FailedDelivery, TelegramSettings as TelegramSettingsType } from '../../../types/types';
+import styles from '@styles/Home.module.css';
+import { Delivery, FailedDelivery, TelegramSettings } from '@types/types';
+import TrackingList from './TrackingList';
 
 interface OwnerPanelProps {
   expectedPackages: string[];
