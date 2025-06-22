@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from '../../styles/Home.module.css';
-import { TelegramSettings as TelegramSettingsType } from '../../types/types';
+import { TelegramSettingsType } from '@/app-types/types';
 
 interface TelegramSettingsProps {
   telegramSettings: TelegramSettingsType;

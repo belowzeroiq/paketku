@@ -9,7 +9,7 @@ export interface FailedDelivery {
   timestamp: string;
 }
 
-export interface TelegramSettings {
+export interface TelegramSettingsType {
   botToken: string;
   chatId: string;
   enabled: boolean;

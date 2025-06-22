@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import DeliveryHistory from './DeliveryHistory';
-//import TelegramSettings from './TelegramSettings';
 import styles from '@styles/Home.module.css';
-import { Delivery, FailedDelivery, TelegramSettings } from '@app-types/types';
+import { Delivery, FailedDelivery, TelegramSettingsType } from '@/app-types/types';
 import TrackingList from './TrackingList';
+import TelegramSettings from './TelegramSettings';
 
 interface OwnerPanelProps {
   expectedPackages: string[];
   deliveredPackages: Delivery[];
   failedDeliveries: FailedDelivery[];
-  telegramSettings: TelegramSettings;
+  telegramSettings: TelegramSettingsType;
   notification: { message: string; type: 'info' | 'success' | 'warning'; visible: boolean };
   setExpectedPackages: React.Dispatch<React.SetStateAction<string[]>>;
-  setTelegramSettings: React.Dispatch<React.SetStateAction<TelegramSettings>>;
+  setTelegramSettings: React.Dispatch<React.SetStateAction<TelegramSettingsType>>;
   log: (message: string) => void;
   showNotification: (message: string, type?: 'info' | 'success' | 'warning') => void;
 }
