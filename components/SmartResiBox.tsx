@@ -185,6 +185,13 @@ const SmartResiBox = () => {
   // Default admin password (in production, this should be environment variable)
   const ADMIN_PASSWORD = "admin123";
 
+  // Language state
+  const [language, setLanguage] = useState<"en" | "id">("en");
+
+  // Translation helper function
+  const t = (key: string) =>
+    translations[language][key as keyof (typeof translations)["en"]] || key;
+
   const addLog = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
     setLogs((prev) => [...prev, `[${timestamp}] ${message}`]);
