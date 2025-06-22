@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resi Box Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            height: calc(100vh - 40px);
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        h2 {
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .owner-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tracking-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .tracking-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #51cf66, #69db7c);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffa726, #ffcc02);
+        }
+        
+        .tracking-list {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .tracking-item {
+            padding: 5px;
+            margin: 2px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tracking-item.delivered {
+            background: rgba(76, 175, 80, 0.3);
+        }
+        
+        .smart-box {
+            background: #2d3748;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            text-align: center;
+        }
+        
+        .camera {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 50%;
+            margin: 10px auto;
+            position: relative;
+            border: 3px solid #666;
+        }
+        
+        .camera::after {
+            content: '📷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+        
+        .camera.scanning {
+            border-color: #ff6b6b;
+            animation: scan-pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes scan-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+        }
+        
+        .lock-status {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .lock-status.locked {
+            background: linear-gradient(45deg, #e53e3e, #c53030);
+            box-shadow: 0 0 20px rgba(229, 62, 62, 0.5);
+        }
+        
+        .lock-status.unlocked {
+            background: linear-gradient(45deg, #38a169, #2f855a);
+            box-shadow: 0 0 20px rgba(56, 161, 105, 0.5);
+        }
+        
+        .qr-scanner {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .qr-scanner.scanning {
+            border-color: #ff6b6b;
+            animation: border-pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes border-pulse {
+            0%, 100% { border-color: #ff6b6b; }
+            50% { border-color: #ff8e8e; }
+        }
+        
+        .status-log {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: #00ff00;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+        
+        .notification {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .scan-input {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .scan-input input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            padding: 8px;
+            font-size: 12px;
+        }
+        
+        .scan-input input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .delivery-history {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+        
+        .history-item {
+            padding: 5px;
+            margin: 2px 0;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+        }
+        
+        .history-item.failed {
+            background: rgba(244, 67, 54, 0.2);
+            border-left: 3px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Owner Panel -->
+        <div class="panel owner-panel">
+            <h2>📱 Owner Interface</h2>
+            <input type="text" class="tracking-input" id="newTracking" placeholder="Enter tracking number...">
+            <button class="btn btn-success" onclick="addTracking()">➕ Add Expected Package</button>
+            
+            <h3 style="margin-top: 15px; font-size: 14px;">Expected Packages:</h3>
+            <div class="tracking-list" id="trackingList"></div>
+            
+            <button class="btn btn-warning" onclick="clearAllTracking()">🗑️ Clear All</button>
+            
+            <div class="notification" id="ownerNotification" style="display: none;"></div>
+            
+            <h3 style="margin-top: 15px; font-size: 14px;">Delivery History:</h3>
+            <div class="delivery-history" id="deliveryHistory"></div>
+            
+            <h3 style="margin-top: 15px; font-size: 14px;">Failed/Unauthorized Attempts:</h3>
+            <div class="delivery-history" id="failedHistory"></div>
+        </div>
+        
+        <!-- Smart Box Panel -->
+        <div class="panel">
+            <h2>📦 Smart Resi Box</h2>
+            <div class="smart-box">
+                <div class="camera" id="camera"></div>
+                <div class="qr-scanner" id="qrScanner">
+                    <div>📱 QR/Barcode Scanner</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Waiting for package...</div>
+                </div>
+                
+                <div class="scan-input">
+                    <input type="text" id="scanInput" placeholder="Simulate QR/Barcode scan...">
+                    <button class="btn" onclick="simulateScan()">🔍 Scan</button>
+                </div>
+                
+                <div class="lock-status locked" id="lockStatus">🔒</div>
+                <div style="font-size: 12px; margin-top: 5px;">Box Status: <span id="boxStatus">LOCKED</span></div>
+            </div>
+            
+            <div class="status-log" id="statusLog"></div>
+        </div>
+        
+        <!-- System Monitor Panel -->
+        <div class="panel">
+            <h2>🖥️ System Monitor</h2>
+            <div style="background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <div style="font-size: 14px; margin-bottom: 10px;"><strong>System Status:</strong></div>
+                <div id="systemStatus" style="font-size: 12px; color: #00ff00;">● ONLINE - Waiting for packages</div>
+                <div style="font-size: 12px; margin-top: 5px;">Camera: <span id="cameraStatus">Ready</span></div>
+                <div style="font-size: 12px;">Database: <span id="dbStatus">Connected</span></div>
+                <div style="font-size: 12px;">WiFi: <span id="wifiStatus">Connected</span></div>
+            </div>
+            
+            <div style="background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <div style="font-size: 14px; margin-bottom: 10px;"><strong>Statistics:</strong></div>
+                <div style="font-size: 12px;">Expected: <span id="expectedCount">0</span></div>
+                <div style="font-size: 12px;">Delivered: <span id="deliveredCount">0</span></div>
+                <div style="font-size: 12px;">Rejected: <span id="rejectedCount">0</span></div>
+            </div>
+            
+            <button class="btn" onclick="resetSystem()">🔄 Reset System</button>
+            <button class="btn" onclick="testNotification()">📲 Test Notification</button>
+        </div>
+    </div>
+
+    <script>
+        let expectedPackages = [];
+        let deliveredPackages = [];
+        let failedDeliveries = [];
+        let rejectedCount = 0;
+        let isBoxLocked = true;
+        let isScanning = false;
+        
+        function log(message) {
+            const statusLog = document.getElementById('statusLog');
+            const timestamp = new Date().toLocaleTimeString();
+            statusLog.innerHTML += `[${timestamp}] ${message}\n`;
+            statusLog.scrollTop = statusLog.scrollHeight;
+        }
+        
+        function updateUI() {
+            // Update tracking list
+            const trackingList = document.getElementById('trackingList');
+            trackingList.innerHTML = '';
+            
+            expectedPackages.forEach((tracking, index) => {
+                const item = document.createElement('div');
+                item.className = 'tracking-item';
+                item.innerHTML = `
+                    <span>${tracking}</span>
+                    <button class="btn" style="padding: 2px 8px; font-size: 10px;" onclick="removeTracking(${index})">❌</button>
+                `;
+                trackingList.appendChild(item);
+            });
+            
+            // Update delivery history
+            const deliveryHistory = document.getElementById('deliveryHistory');
+            deliveryHistory.innerHTML = '';
+            
+            deliveredPackages.forEach(delivery => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <div><strong>✅ ${delivery.tracking}</strong></div>
+                    <div style="font-size: 10px; color: #aaa;">${delivery.timestamp}</div>
+                `;
+                deliveryHistory.appendChild(item);
+            });
+            
+            // Update failed delivery history
+            const failedHistory = document.getElementById('failedHistory');
+            failedHistory.innerHTML = '';
+            
+            failedDeliveries.forEach(failed => {
+                const item = document.createElement('div');
+                item.className = 'history-item failed';
+                item.innerHTML = `
+                    <div><strong>❌ ${failed.tracking}</strong></div>
+                    <div style="font-size: 10px; color: #ffcdd2;">Reason: ${failed.reason}</div>
+                    <div style="font-size: 10px; color: #aaa;">${failed.timestamp}</div>
+                `;
+                failedHistory.appendChild(item);
+            });
+            
+            // Update statistics
+            document.getElementById('expectedCount').textContent = expectedPackages.length;
+            document.getElementById('deliveredCount').textContent = deliveredPackages.length;
+            document.getElementById('rejectedCount').textContent = rejectedCount;
+        }
+        
+        function addTracking() {
+            const input = document.getElementById('newTracking');
+            const tracking = input.value.trim();
+            
+            if (tracking && !expectedPackages.includes(tracking)) {
+                expectedPackages.push(tracking);
+                input.value = '';
+                log(`✅ Added expected package: ${tracking}`);
+                updateUI();
+            } else if (expectedPackages.includes(tracking)) {
+                log(`⚠️ Tracking number already exists: ${tracking}`);
+            }
+        }
+        
+        function removeTracking(index) {
+            const removed = expectedPackages.splice(index, 1)[0];
+            log(`🗑️ Removed expected package: ${removed}`);
+            updateUI();
+        }
+        
+        function clearAllTracking() {
+            expectedPackages = [];
+            log('🗑️ Cleared all expected packages');
+            updateUI();
+        }
+        
+        function simulateScan() {
+            if (isScanning) return;
+            
+            const scanInput = document.getElementById('scanInput');
+            const scannedCode = scanInput.value.trim();
+            
+            if (!scannedCode) {
+                log('❌ No barcode/QR code provided');
+                return;
+            }
+            
+            isScanning = true;
+            
+            // Visual feedback
+            const camera = document.getElementById('camera');
+            const qrScanner = document.getElementById('qrScanner');
+            const systemStatus = document.getElementById('systemStatus');
+            
+            camera.classList.add('scanning');
+            qrScanner.classList.add('scanning');
+            qrScanner.innerHTML = `
+                <div>🔍 Scanning...</div>
+                <div style="font-size: 12px; margin-top: 5px;">${scannedCode}</div>
+            `;
+            
+            systemStatus.textContent = '🔍 SCANNING - Processing barcode...';
+            log(`📷 Camera detected barcode: ${scannedCode}`);
+            log('🔍 Processing QR/Barcode...');
+            
+            setTimeout(() => {
+                // Check if tracking number exists in expected packages
+                const trackingIndex = expectedPackages.indexOf(scannedCode);
+                
+                if (trackingIndex !== -1) {
+                    // Valid tracking number found
+                    log(`✅ Valid tracking number found: ${scannedCode}`);
+                    log('🔓 Unlocking box...');
+                    
+                    unlockBox(scannedCode, trackingIndex);
+                    
+                } else {
+                    // Invalid tracking number
+                    log(`❌ Invalid tracking number: ${scannedCode}`);
+                    log('🔒 Access denied - box remains locked');
+                    
+                    rejectedCount++;
+                    
+                    // Add to failed deliveries history
+                    failedDeliveries.push({
+                        tracking: scannedCode,
+                        reason: 'Tracking number not found in database',
+                        timestamp: new Date().toLocaleString()
+                    });
+                    
+                    systemStatus.textContent = '❌ ACCESS DENIED - Invalid tracking number';
+                    
+                    showOwnerNotification(`🚨 Unauthorized delivery attempt with tracking: ${scannedCode}`, 'warning');
+                }
+                
+                // Reset scanning state
+                camera.classList.remove('scanning');
+                qrScanner.classList.remove('scanning');
+                qrScanner.innerHTML = `
+                    <div>📱 QR/Barcode Scanner</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Waiting for package...</div>
+                `;
+                
+                isScanning = false;
+                scanInput.value = '';
+                updateUI();
+                
+            }, 2000);
+        }
+        
+        function unlockBox(tracking, trackingIndex) {
+            const lockStatus = document.getElementById('lockStatus');
+            const boxStatus = document.getElementById('boxStatus');
+            const systemStatus = document.getElementById('systemStatus');
+            
+            // Unlock the box
+            isBoxLocked = false;
+            lockStatus.classList.remove('locked');
+            lockStatus.classList.add('unlocked');
+            lockStatus.textContent = '🔓';
+            boxStatus.textContent = 'UNLOCKED';
+            
+            systemStatus.textContent = '🔓 BOX UNLOCKED - Package delivery in progress';
+            log('📦 Box unlocked - courier can place package');
+            
+            // Remove from expected packages
+            expectedPackages.splice(trackingIndex, 1);
+            
+            // Add to delivered packages
+            deliveredPackages.push({
+                tracking: tracking,
+                timestamp: new Date().toLocaleString()
+            });
+            
+            // Send notification to owner
+            showOwnerNotification(`📦 Package delivered! Tracking: ${tracking}`, 'success');
+            
+            // Auto-lock after 10 seconds
+            setTimeout(() => {
+                lockBox();
+            }, 10000);
+        }
+        
+        function lockBox() {
+            const lockStatus = document.getElementById('lockStatus');
+            const boxStatus = document.getElementById('boxStatus');
+            const systemStatus = document.getElementById('systemStatus');
+            
+            isBoxLocked = true;
+            lockStatus.classList.remove('unlocked');
+            lockStatus.classList.add('locked');
+            lockStatus.textContent = '🔒';
+            boxStatus.textContent = 'LOCKED';
+            
+            systemStatus.textContent = '🔒 BOX SECURED - Waiting for next package';
+            log('🔒 Box automatically locked');
+        }
+        
+        function showOwnerNotification(message, type = 'info') {
+            const notification = document.getElementById('ownerNotification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            if (type === 'success') {
+                notification.style.background = 'rgba(76, 175, 80, 0.2)';
+                notification.style.borderColor = 'rgba(76, 175, 80, 0.5)';
+            } else if (type === 'warning') {
+                notification.style.background = 'rgba(255, 152, 0, 0.2)';
+                notification.style.borderColor = 'rgba(255, 152, 0, 0.5)';
+            }
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+        
+        function resetSystem() {
+            expectedPackages = [];
+            deliveredPackages = [];
+            failedDeliveries = [];
+            rejectedCount = 0;
+            isBoxLocked = true;
+            isScanning = false;
+            
+            // Reset UI
+            const lockStatus = document.getElementById('lockStatus');
+            const boxStatus = document.getElementById('boxStatus');
+            const systemStatus = document.getElementById('systemStatus');
+            
+            lockStatus.classList.remove('unlocked');
+            lockStatus.classList.add('locked');
+            lockStatus.textContent = '🔒';
+            boxStatus.textContent = 'LOCKED';
+            systemStatus.textContent = '● ONLINE - System reset complete';
+            
+            document.getElementById('statusLog').innerHTML = '';
+            document.getElementById('scanInput').value = '';
+            document.getElementById('newTracking').value = '';
+            
+            log('🔄 System reset complete');
+            updateUI();
+        }
+        
+        function testNotification() {
+            showOwnerNotification('📲 Test notification - System working properly!', 'info');
+            log('📲 Test notification sent to owner');
+        }
+        
+        // Initialize
+        log('🚀 Smart Resi Box System initialized');
+        log('📷 Camera ready for QR/Barcode scanning');
+        log('📡 WiFi connected - Ready to receive packages');
+        updateUI();
+        
+        // Add Enter key support for inputs
+        document.getElementById('newTracking').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addTracking();
+        });
+        
+        document.getElementById('scanInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') simulateScan();
+        });
+    </script>
+</body>
+</html>
