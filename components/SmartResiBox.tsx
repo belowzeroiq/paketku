@@ -174,6 +174,45 @@ const SmartResiBox = () => {
     showNotification("Telegram bot configured!", "success");
   };
 
+  const handleTabClick = (tabId: "overview" | "history" | "settings") => {
+    if (tabId === "settings") {
+      if (!isAuthenticated) {
+        setShowPasswordModal(true);
+        return;
+      }
+    }
+    setActiveTab(tabId);
+  };
+
+  const handlePasswordSubmit = () => {
+    if (passwordInput === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      setActiveTab("settings");
+      setShowPasswordModal(false);
+      setPasswordInput("");
+      setPasswordError("");
+      addLog("🔐 Admin authenticated for settings access");
+      showNotification("Access granted to settings", "success");
+    } else {
+      setPasswordError("Incorrect password. Please try again.");
+      setPasswordInput("");
+      addLog("🚫 Failed authentication attempt");
+    }
+  };
+
+  const handlePasswordCancel = () => {
+    setShowPasswordModal(false);
+    setPasswordInput("");
+    setPasswordError("");
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setActiveTab("overview");
+    addLog("🚪 Admin logged out from settings");
+    showNotification("Logged out from settings", "info");
+  };
+
   return (
     <div className={styles.container}>
       {/* Animated background elements */}
