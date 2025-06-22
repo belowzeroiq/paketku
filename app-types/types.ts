@@ -13,6 +13,7 @@ export interface TelegramSettingsType {
   botToken: string;
   chatId: string;
   enabled: boolean;
+  usingEnvVars?: boolean;
 }
 
 export interface Notification {

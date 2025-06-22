@@ -14,9 +14,9 @@ export default function Home() {
   const [isBoxLocked, setIsBoxLocked] = useState(true);
   const [isScanning, setIsScanning] = useState(false);
   const [telegramSettings, setTelegramSettings] = useState<TelegramSettingsType>({
-    botToken: '',
-    chatId: '',
-    enabled: false,
+    botToken: process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '',
+    chatId: process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || '',
+    enabled: Boolean(process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN && process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID)
   });
   const [logs, setLogs] = useState<string[]>([]);
   const [notification, setNotification] = useState<{
