@@ -343,7 +343,14 @@ const SmartResiBox = () => {
     setIsAuthenticated(false);
     setActiveTab("overview");
     addLog("🚪 Admin logged out from settings");
-    showNotification("Logged out from settings", "info");
+    showNotification(t("loggedOutSettings"), "info");
+  };
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "en" ? "id" : "en"));
+    addLog(
+      `🌐 Language switched to ${language === "en" ? "Indonesian" : "English"}`,
+    );
   };
 
   return (
