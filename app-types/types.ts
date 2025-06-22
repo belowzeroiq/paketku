@@ -16,6 +16,11 @@ export interface TelegramSettingsType {
   usingEnvVars?: boolean;
 }
 
+interface QrScannerProps {
+  isScanning: boolean;
+  code: string;
+}
+
 export interface Notification {
   message: string;
   type: 'info' | 'success' | 'warning';
