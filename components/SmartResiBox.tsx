@@ -228,7 +228,7 @@ const SmartResiBox = () => {
   const clearAllPackages = () => {
     setExpectedPackages([]);
     addLog("🗑️ Cleared all expected packages");
-    showNotification("All packages cleared!", "info");
+    showNotification(t("allPackagesCleared"), "info");
   };
 
   const simulateScan = async () => {
