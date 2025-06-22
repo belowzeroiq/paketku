@@ -112,20 +112,7 @@ const TelegramSettings: React.FC<TelegramSettingsProps> = ({
     }
   };
 
-  return (
-    <>
-      <button
-        className={`${styles.btn} ${styles.btnSuccess}`}
-        onClick={saveTelegramSettings}
-        disabled={usingEnvVars}
-      >
-        {usingEnvVars ? "Using Vercel Config" : "💾 Save Settings"}
-      </button>
-      <button className={styles.btn} onClick={testTelegramBot}>
-        📱 Test Bot
-      </button>
-    </>
-  );
+  return null;
 };
 
 export default TelegramSettings;
