@@ -376,6 +376,7 @@ const SmartResiBox = () => {
             <button
               onClick={toggleLanguage}
               className={styles.languageButton}
+              data-language={language}
               title={`Switch to ${language === "en" ? "Indonesian" : "English"}`}
             >
               <Globe className={styles.languageIcon} />
