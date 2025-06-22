@@ -19,7 +19,8 @@
       "@components/*": ["components/*"],
       "@app-types/*": ["app-types/*"],
       "@styles/*": ["styles/*"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "typeRoots": ["node_modules/@types"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
