@@ -283,11 +283,14 @@ const SmartResiBox = () => {
             ].map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
-                onClick={() => setActiveTab(id as any)}
+                onClick={() => handleTabClick(id as any)}
                 className={`${styles.tab} ${activeTab === id ? styles.activeTab : ""}`}
               >
                 <Icon className={styles.tabIcon} />
                 {label}
+                {id === "settings" && isAuthenticated && (
+                  <div className={styles.authenticatedIndicator}></div>
+                )}
               </button>
             ))}
           </div>
