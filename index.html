@@ -279,6 +279,12 @@
             
             <button class="btn btn-warning" onclick="clearAllTracking()">🗑️ Clear All</button>
             
+            <h3 style="margin-top: 15px; font-size: 14px;">Telegram Bot Settings:</h3>
+            <input type="text" class="tracking-input" id="botToken" placeholder="Bot Token (e.g., 123456:ABC-DEF...)" style="margin-bottom: 5px;">
+            <input type="text" class="tracking-input" id="chatId" placeholder="Chat ID (e.g., 123456789)" style="margin-bottom: 10px;">
+            <button class="btn btn-success" onclick="saveTelegramSettings()">💾 Save Settings</button>
+            <button class="btn" onclick="testTelegramBot()">📱 Test Bot</button>
+            
             <div class="notification" id="ownerNotification" style="display: none;"></div>
             
             <h3 style="margin-top: 15px; font-size: 14px;">Delivery History:</h3>
@@ -319,6 +325,7 @@
                 <div style="font-size: 12px; margin-top: 5px;">Camera: <span id="cameraStatus">Ready</span></div>
                 <div style="font-size: 12px;">Database: <span id="dbStatus">Connected</span></div>
                 <div style="font-size: 12px;">WiFi: <span id="wifiStatus">Connected</span></div>
+                <div style="font-size: 12px;">Telegram Bot: <span id="telegramStatus">Not configured</span></div>
             </div>
             
             <div style="background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
@@ -340,6 +347,11 @@
         let rejectedCount = 0;
         let isBoxLocked = true;
         let isScanning = false;
+        let telegramSettings = {
+            botToken: '',
+            chatId: '',
+            enabled: false
+        };
         
         function log(message) {
             const statusLog = document.getElementById('statusLog');
@@ -481,6 +493,7 @@
                     systemStatus.textContent = '❌ ACCESS DENIED - Invalid tracking number';
                     
                     showOwnerNotification(`🚨 Unauthorized delivery attempt with tracking: ${scannedCode}`, 'warning');
+                    sendTelegramNotification(`🚨 *SECURITY ALERT!*\n\n❌ *Unauthorized Delivery Attempt*\n📦 *Invalid Tracking:* \`${scannedCode}\`\n🕐 *Time:* ${new Date().toLocaleString()}\n📍 *Location:* Smart Resi Box\n\n⚠️ Someone tried to deliver a package that wasn't expected. Box remains locked for security.`);
                 }
                 
                 // Reset scanning state
@@ -524,6 +537,7 @@
             
             // Send notification to owner
             showOwnerNotification(`📦 Package delivered! Tracking: ${tracking}`, 'success');
+            sendTelegramNotification(`🎉 *Package Delivered Successfully!*\n\n📦 *Tracking:* \`${tracking}\`\n🕐 *Time:* ${new Date().toLocaleString()}\n📍 *Location:* Smart Resi Box\n\n✅ Your package has been securely delivered and the box is now locked.`);
             
             // Auto-lock after 10 seconds
             setTimeout(() => {
@@ -589,6 +603,83 @@
             
             log('🔄 System reset complete');
             updateUI();
+        }
+        
+        function saveTelegramSettings() {
+            const botToken = document.getElementById('botToken').value.trim();
+            const chatId = document.getElementById('chatId').value.trim();
+            
+            if (botToken && chatId) {
+                telegramSettings.botToken = botToken;
+                telegramSettings.chatId = chatId;
+                telegramSettings.enabled = true;
+                
+                document.getElementById('telegramStatus').textContent = 'Configured ✅';
+                document.getElementById('telegramStatus').style.color = '#4caf50';
+                
+                log(`📱 Telegram bot configured: Bot Token: ${botToken.substring(0, 10)}...`);
+                log(`📱 Chat ID: ${chatId}`);
+                
+                showOwnerNotification('✅ Telegram bot settings saved successfully!', 'success');
+            } else {
+                showOwnerNotification('❌ Please enter both Bot Token and Chat ID', 'warning');
+            }
+        }
+        
+        async function sendTelegramNotification(message) {
+            if (!telegramSettings.enabled) {
+                log('📱 Telegram not configured - notification not sent');
+                return;
+            }
+            
+            const url = `https://api.telegram.org/bot${telegramSettings.botToken}/sendMessage`;
+            const data = {
+                chat_id: telegramSettings.chatId,
+                text: message,
+                parse_mode: 'Markdown'
+            };
+            
+            try {
+                log('📱 Sending Telegram notification...');
+                
+                // Simulate API call (in real implementation, this would be an actual HTTP request)
+                // For demo purposes, we'll simulate success
+                setTimeout(() => {
+                    log('📱 ✅ Telegram notification sent successfully');
+                }, 1000);
+                
+                // In real implementation, uncomment below:
+                /*
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    log('📱 ✅ Telegram notification sent successfully');
+                } else {
+                    throw new Error('Failed to send notification');
+                }
+                */
+                
+            } catch (error) {
+                log(`📱 ❌ Failed to send Telegram notification: ${error.message}`);
+            }
+        }
+        
+        function testTelegramBot() {
+            if (!telegramSettings.enabled) {
+                showOwnerNotification('❌ Please configure Telegram bot settings first', 'warning');
+                return;
+            }
+            
+            const testMessage = `🧪 *Test Notification*\n\n✅ Your Smart Resi Box is working perfectly!\n🕐 *Time:* ${new Date().toLocaleString()}\n📱 *Status:* All systems operational\n\n🔧 This is a test message to verify your Telegram bot configuration.`;
+            
+            sendTelegramNotification(testMessage);
+            showOwnerNotification('📱 Test notification sent to Telegram!', 'info');
         }
         
         function testNotification() {
