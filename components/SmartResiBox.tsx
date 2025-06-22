@@ -458,19 +458,19 @@ const SmartResiBox = () => {
                   <div className={styles.statValue}>
                     {expectedPackages.length}
                   </div>
-                  <div className={styles.statLabel}>Expected</div>
+                  <div className={styles.statLabel}>{t("expected")}</div>
                 </div>
                 <div className={`${styles.statCard} ${styles.deliveredStat}`}>
                   <div className={styles.statValue}>
                     {deliveredPackages.length}
                   </div>
-                  <div className={styles.statLabel}>Delivered</div>
+                  <div className={styles.statLabel}>{t("delivered")}</div>
                 </div>
                 <div className={`${styles.statCard} ${styles.failedStat}`}>
                   <div className={styles.statValue}>
                     {failedDeliveries.length}
                   </div>
-                  <div className={styles.statLabel}>Failed</div>
+                  <div className={styles.statLabel}>{t("failed")}</div>
                 </div>
               </div>
             </div>
