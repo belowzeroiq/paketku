@@ -276,7 +276,7 @@ const SmartResiBox = () => {
         },
       ]);
 
-      addLog(`��� Access denied: ${scanInput}`);
+      addLog(`❌ Access denied: ${scanInput}`);
       showNotification(t("unauthorizedDelivery"), "error");
     }
 
@@ -325,9 +325,9 @@ const SmartResiBox = () => {
       setPasswordInput("");
       setPasswordError("");
       addLog("🔐 Admin authenticated for settings access");
-      showNotification("Access granted to settings", "success");
+      showNotification(t("accessGrantedSettings"), "success");
     } else {
-      setPasswordError("Incorrect password. Please try again.");
+      setPasswordError(t("incorrectPassword"));
       setPasswordInput("");
       addLog("🚫 Failed authentication attempt");
     }
