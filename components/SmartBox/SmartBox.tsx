@@ -6,7 +6,7 @@ import LockStatus from './LockStatus';
 import OwnerPanel from '../components/OwnerPanel/OwnerPanel';
 import SmartBox from '../components/SmartBox/SmartBox';
 import SystemMonitor from '../components/SystemMonitor/SystemMonitor';
-import { Delivery, FailedDelivery, TelegramSettings } from '../../types/types';
+import { Delivery, FailedDelivery, TelegramSettings } from '../../../../types/types';
 
 interface SmartBoxProps {
   expectedPackages: string[];
