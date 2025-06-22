@@ -3,7 +3,7 @@ import QrScanner from './QrScanner';
 import LockStatus from './LockStatus';
 import OwnerPanel from './OwnerPanel/OwnerPanel';
 //import SmartBox from 'components/SmartBox/SmartBox';
-import SystemMonitor from 'components/SystemMonitor/SystemMonitor';
+import SystemMonitor from './SystemMonitor/SystemMonitor';
 import styles from '@styles/Home.module.css';
 import { Delivery, FailedDelivery, TelegramSettings } from '@/app-types/types';
 import Camera from './Camera';
