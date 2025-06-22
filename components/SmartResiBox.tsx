@@ -483,7 +483,87 @@ const SmartResiBox = () => {
 
         {/* Settings Tab */}
         {activeTab === "settings" && (
-          <div className={styles.settingsContainer}>
+          <div className={styles.settingsGrid}>
+            {/* Owner Panel */}
+            <div className={styles.panel}>
+              <div className={styles.panelHeader}>
+                <div className={styles.panelIcon}>
+                  <User className={styles.icon} />
+                </div>
+                <h2>Package Management</h2>
+              </div>
+
+              {/* Add Package */}
+              <div className={styles.addPackageSection}>
+                <label className={styles.label}>Add Expected Package</label>
+                <div className={styles.inputGroup}>
+                  <input
+                    type="text"
+                    value={newTracking}
+                    onChange={(e) => setNewTracking(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && addPackage()}
+                    placeholder="Enter tracking number..."
+                    className={styles.input}
+                  />
+                  <button
+                    onClick={addPackage}
+                    className={`${styles.button} ${styles.addButton}`}
+                  >
+                    <Plus className={styles.buttonIcon} />
+                  </button>
+                </div>
+
+                {expectedPackages.length > 0 && (
+                  <button
+                    onClick={clearAllPackages}
+                    className={`${styles.button} ${styles.clearButton}`}
+                  >
+                    <Trash2 className={styles.buttonIcon} />
+                    Clear All Packages
+                  </button>
+                )}
+              </div>
+
+              {/* Expected Packages */}
+              <div className={styles.packagesSection}>
+                <div className={styles.sectionHeader}>
+                  <h3>Expected Packages</h3>
+                  <span className={styles.badge}>
+                    {expectedPackages.length}
+                  </span>
+                </div>
+
+                <div className={styles.packagesList}>
+                  {expectedPackages.length === 0 ? (
+                    <div className={styles.emptyState}>
+                      <Package className={styles.emptyIcon} />
+                      <p>No packages expected</p>
+                    </div>
+                  ) : (
+                    <div className={styles.packagesContainer}>
+                      {expectedPackages.map((tracking, index) => (
+                        <div key={index} className={styles.packageItem}>
+                          <div className={styles.packageInfo}>
+                            <Package className={styles.packageIcon} />
+                            <span className={styles.trackingNumber}>
+                              {tracking}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => removePackage(tracking)}
+                            className={styles.removeButton}
+                          >
+                            <Trash2 className={styles.removeIcon} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Telegram Settings */}
             <div className={styles.panel}>
               <div className={styles.panelHeader}>
                 <div className={styles.panelIcon}>
