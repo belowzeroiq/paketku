@@ -210,14 +210,14 @@ const SmartResiBox = () => {
     if (!newTracking.trim()) return;
 
     if (expectedPackages.includes(newTracking.trim())) {
-      showNotification("Package already exists!", "warning");
+      showNotification(t("packageExists"), "warning");
       return;
     }
 
     setExpectedPackages((prev) => [...prev, newTracking.trim()]);
     addLog(`✅ Added expected package: ${newTracking}`);
     setNewTracking("");
-    showNotification("Package added successfully!", "success");
+    showNotification(t("packageAddedSuccess"), "success");
   };
 
   const removePackage = (tracking: string) => {
