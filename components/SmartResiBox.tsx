@@ -258,7 +258,7 @@ const SmartResiBox = () => {
 
       addLog(`✅ Package delivered: ${scanInput}`);
       addLog("🔓 Box unlocked");
-      showNotification("Package delivered successfully!", "success");
+      showNotification(t("packageDeliveredSuccess"), "success");
 
       // Auto-lock after 5 seconds
       setTimeout(() => {
