@@ -8,11 +8,84 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Prevent horizontal scrolling on mobile */
+  overflow-x: hidden;
+  /* Improve touch scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent text size adjustment on mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
 body {
   font-family: "Inter", "Arial", sans-serif;
   color: #202020;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal scrolling */
+  overflow-x: hidden;
+  /* Improve touch scrolling performance */
+  -webkit-overflow-scrolling: touch;
+  /* Remove tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+  /* Improve touch action */
+  touch-action: manipulation;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  body {
+    /* Prevent zoom on input focus for iOS */
+    font-size: 16px;
+  }
+}
+
+/* Improve focus visibility for accessibility */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Remove default button styles on mobile */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  /* Remove tap highlight */
+  -webkit-tap-highlight-color: transparent;
+  /* Improve touch action */
+  touch-action: manipulation;
+}
+
+/* Improve input styling on mobile */
+input {
+  /* Remove default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Remove tap highlight */
+  -webkit-tap-highlight-color: transparent;
+  /* Improve touch action */
+  touch-action: manipulation;
+}
+
+/* Prevent zoom on iOS when input is focused */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+  font-size: 16px;
+}
+
+/* Improve mobile scrolling */
+.mobile-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
 }
 
 /* Custom animations */
