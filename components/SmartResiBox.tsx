@@ -866,8 +866,14 @@ const SmartResiBox = () => {
                         botToken: e.target.value,
                       }))
                     }
-                    placeholder="Enter your bot token..."
+                    placeholder={t("enterBotToken")}
                     className={styles.input}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    inputMode="text"
+                    aria-label={t("botToken")}
                   />
                 </div>
 
