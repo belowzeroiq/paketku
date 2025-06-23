@@ -720,9 +720,12 @@ const SmartResiBox = () => {
                     onKeyPress={(e) =>
                       e.key === "Enter" && handlePasswordSubmit()
                     }
-                    placeholder="Enter admin password..."
+                    placeholder={t("enterAdminPasswordPlaceholder")}
                     className={styles.input}
                     autoFocus
+                    autoComplete="current-password"
+                    inputMode="text"
+                    aria-label={t("password")}
                   />
                 </div>
 
