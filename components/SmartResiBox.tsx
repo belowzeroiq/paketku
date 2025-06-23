@@ -535,6 +535,12 @@ const SmartResiBox = () => {
                       placeholder={t("enterTrackingNumber")}
                       disabled={isScanning}
                       className={`${styles.input} ${isScanning ? styles.disabled : ""}`}
+                      autoComplete="off"
+                      autoCapitalize="off"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      inputMode="text"
+                      aria-label={t("enterTrackingNumber")}
                     />
                     <button
                       onClick={simulateScan}
