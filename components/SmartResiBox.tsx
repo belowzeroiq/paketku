@@ -362,7 +362,7 @@ const SmartResiBox = () => {
         <div className={styles.orb3}></div>
       </div>
 
-      <div className={styles.content}>
+      <div className={`${styles.content} mobile-scroll`}>
         {/* Header */}
         <div className={styles.header}>
           <div className={styles.logoContainer}>
