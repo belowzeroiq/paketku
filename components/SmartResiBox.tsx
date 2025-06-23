@@ -362,7 +362,7 @@ const SmartResiBox = () => {
         <div className={styles.orb3}></div>
       </div>
 
-      <div className={styles.content}>
+      <div className={`${styles.content} mobile-scroll`}>
         {/* Header */}
         <div className={styles.header}>
           <div className={styles.logoContainer}>
@@ -535,6 +535,12 @@ const SmartResiBox = () => {
                       placeholder={t("enterTrackingNumber")}
                       disabled={isScanning}
                       className={`${styles.input} ${isScanning ? styles.disabled : ""}`}
+                      autoComplete="off"
+                      autoCapitalize="off"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      inputMode="text"
+                      aria-label={t("enterTrackingNumber")}
                     />
                     <button
                       onClick={simulateScan}
@@ -714,9 +720,12 @@ const SmartResiBox = () => {
                     onKeyPress={(e) =>
                       e.key === "Enter" && handlePasswordSubmit()
                     }
-                    placeholder="Enter admin password..."
+                    placeholder={t("enterAdminPasswordPlaceholder")}
                     className={styles.input}
                     autoFocus
+                    autoComplete="current-password"
+                    inputMode="text"
+                    aria-label={t("password")}
                   />
                 </div>
 
@@ -762,8 +771,14 @@ const SmartResiBox = () => {
                     value={newTracking}
                     onChange={(e) => setNewTracking(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && addPackage()}
-                    placeholder="Enter tracking number..."
+                    placeholder={t("enterTrackingNumberAdd")}
                     className={styles.input}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    inputMode="text"
+                    aria-label={t("addExpectedPackage")}
                   />
                   <button
                     onClick={addPackage}
@@ -854,8 +869,14 @@ const SmartResiBox = () => {
                         botToken: e.target.value,
                       }))
                     }
-                    placeholder="Enter your bot token..."
+                    placeholder={t("enterBotToken")}
                     className={styles.input}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    inputMode="text"
+                    aria-label={t("botToken")}
                   />
                 </div>
 
@@ -870,8 +891,14 @@ const SmartResiBox = () => {
                         chatId: e.target.value,
                       }))
                     }
-                    placeholder="Enter your chat ID..."
+                    placeholder={t("enterChatId")}
                     className={styles.input}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    inputMode="text"
+                    aria-label={t("chatId")}
                   />
                 </div>
 

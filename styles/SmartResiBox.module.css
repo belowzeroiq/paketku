@@ -511,6 +511,8 @@
   max-height: 16rem;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .emptyState {
@@ -775,6 +777,8 @@
   height: 16rem;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .logContainer {
@@ -812,6 +816,8 @@
   gap: 1rem;
   max-height: 24rem;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .historyItem {
@@ -1216,10 +1222,292 @@
   }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Mobile-First Responsive Design */
+@media (max-width: 480px) {
+  /* Extra small devices */
   .content {
+    padding: 0.75rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .logoContainer {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .logoIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .statusBar {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .statusItem {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .languageToggle {
+    margin-bottom: 1rem;
+  }
+
+  .languageButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .languageIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .tabNavigation {
+    margin-bottom: 1.5rem;
+  }
+
+  .tabContainer {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tabContainer::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    min-width: fit-content;
+  }
+
+  .tabIcon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .panel {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .panelHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .panelHeader h2 {
+    font-size: 1.125rem;
+  }
+
+  .panelIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .statCard {
+    padding: 1rem;
+  }
+
+  .statValue {
+    font-size: 1.25rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+  }
+
+  .boxVisual {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .camera {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .cameraIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .lockStatus {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .lockIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .statusText p:first-child {
+    font-size: 1rem;
+  }
+
+  .statusValue {
+    font-size: 1.25rem;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .input {
+    padding: 0.75rem;
+    font-size: 1rem; /* Prevent zoom on iOS */
+  }
+
+  .button {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    min-height: 44px; /* iOS touch target minimum */
+  }
+
+  .buttonIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .activityLog {
+    height: 12rem;
+  }
+
+  .logEntry {
+    font-size: 0.75rem;
     padding: 0.5rem;
+  }
+
+  .packagesList {
+    max-height: 12rem;
+  }
+
+  .packageItem {
+    padding: 0.75rem;
+  }
+
+  .trackingNumber {
+    font-size: 0.75rem;
+  }
+
+  .historyList {
+    max-height: 16rem;
+  }
+
+  .historyItem {
+    padding: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .historyContent .trackingNumber {
+    font-size: 1rem;
+  }
+
+  .historyIcon {
+    align-self: flex-end;
+  }
+
+  .modal {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    max-width: none;
+  }
+
+  .modalHeader {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .modalIcon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .modalHeader h3 {
+    font-size: 1.25rem;
+  }
+
+  .modalContent {
+    padding: 0 1rem 1.5rem;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .settingsForm {
+    gap: 1rem;
+  }
+
+  .formGroup {
+    margin-bottom: 0.5rem;
+  }
+
+  .label {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .panelTitleSection {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .logoutButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    align-self: center;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Small tablets */
+  .content {
+    padding: 1rem;
   }
 
   .title {
@@ -1239,55 +1527,258 @@
   }
 
   .statusBar {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .statusItem {
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
   }
 
   .tabContainer {
-    flex-direction: column;
     width: 100%;
   }
 
   .tab {
+    flex: 1;
     justify-content: center;
+    padding: 0.75rem 1rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .boxVisual {
+    padding: 1.5rem;
+  }
+
+  .inputGroup {
+    gap: 0.75rem;
+  }
+
+  .input {
+    font-size: 1rem; /* Prevent zoom on iOS */
+    padding: 0.75rem 1rem;
+  }
+
+  .button {
+    min-height: 44px; /* iOS touch target minimum */
   }
 
   .modal {
-    margin: 1rem;
-    width: calc(100% - 2rem);
+    margin: 2rem;
+    width: calc(100% - 4rem);
+    max-width: 500px;
   }
 
-  .modalHeader {
-    padding: 1.5rem 1.5rem 1rem;
+  .historyGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
-  .modalContent {
-    padding: 0 1.5rem 1.5rem;
+  .settingsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Large tablets */
+  .content {
+    padding: 1.5rem;
   }
 
-  .modalActions {
-    flex-direction: column;
+  .overviewGrid {
+    max-width: 900px;
   }
 
-  .panelTitleSection {
-    flex-direction: column;
-    align-items: flex-start;
+  .historyGrid {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .settingsGrid {
+    grid-template-columns: 1fr 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  /* Desktop */
+  .overviewGrid {
+    max-width: 1000px;
+  }
+
+  .historyGrid {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .settingsGrid {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
+
+/* Touch-friendly enhancements */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  .button,
+  .tab,
+  .languageButton,
+  .removeButton {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .statusItem {
+    padding: 0.75rem 1rem;
+  }
+
+  .packageItem {
+    padding: 1rem;
+  }
+
+  .historyItem {
+    padding: 1rem;
+  }
+
+  .input {
+    padding: 0.875rem 1rem;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  /* Remove hover effects on touch devices */
+  .button:hover,
+  .tab:hover,
+  .languageButton:hover,
+  .packageItem:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  /* Add active states for touch feedback */
+  .button:active {
+    transform: scale(0.98);
+  }
+
+  .tab:active,
+  .languageButton:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Landscape orientation optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .header {
+    margin-bottom: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .statusBar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.5rem;
   }
 
-  .languageButton {
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
+  .statusItem {
+    flex: none;
+    width: auto;
   }
 
-  .languageIcon {
-    width: 1rem;
-    height: 1rem;
+  .boxVisual {
+    padding: 1rem;
   }
 
-  .languageText {
-    min-width: 1rem;
-    font-size: 0.75rem;
+  .camera {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .lockStatus {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .activityLog {
+    height: 10rem;
+  }
+
+  .packagesList {
+    max-height: 10rem;
+  }
+
+  .historyList {
+    max-height: 12rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .orb1,
+  .orb2,
+  .orb3 {
+    animation: none;
+  }
+
+  .camera.cameraScanning {
+    animation: none;
+  }
+
+  .buttonIcon.scanning {
+    animation: none;
+  }
+
+  .statusDot {
+    animation: none;
+  }
+
+  .scanningOverlay {
+    animation: none;
+  }
+
+  .authenticatedIndicator {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .container {
+    background: #000000;
+  }
+
+  .panel {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ffffff;
+  }
+
+  .button {
+    border: 2px solid currentColor;
+  }
+
+  .input {
+    border: 2px solid #ffffff;
+  }
+
+  .statusDot {
+    border: 2px solid #ffffff;
   }
 }
 
