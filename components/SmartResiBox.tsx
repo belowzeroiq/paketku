@@ -888,8 +888,14 @@ const SmartResiBox = () => {
                         chatId: e.target.value,
                       }))
                     }
-                    placeholder="Enter your chat ID..."
+                    placeholder={t("enterChatId")}
                     className={styles.input}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    inputMode="text"
+                    aria-label={t("chatId")}
                   />
                 </div>
 
