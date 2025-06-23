@@ -816,6 +816,8 @@
   gap: 1rem;
   max-height: 24rem;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .historyItem {
