@@ -768,8 +768,14 @@ const SmartResiBox = () => {
                     value={newTracking}
                     onChange={(e) => setNewTracking(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && addPackage()}
-                    placeholder="Enter tracking number..."
+                    placeholder={t("enterTrackingNumberAdd")}
                     className={styles.input}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    inputMode="text"
+                    aria-label={t("addExpectedPackage")}
                   />
                   <button
                     onClick={addPackage}
